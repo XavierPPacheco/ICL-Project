@@ -1,0 +1,3 @@
+javacc Parser0.jj
+javac Parser0.java
+java Parser0
