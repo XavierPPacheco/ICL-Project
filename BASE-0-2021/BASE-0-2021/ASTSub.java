@@ -8,8 +8,15 @@ ASTNode lhs, rhs;
 	int v2 = rhs.eval();
         return v1-v2; 
 	}
-    
-        public ASTSub(ASTNode l, ASTNode r)
+
+    @Override
+    public void compile(CodeBlock c) {
+        lhs.compile(c);
+        rhs.compile(c);
+        c.emit("isub");
+    }
+
+    public ASTSub(ASTNode l, ASTNode r)
         {
 		lhs = l; rhs = r;
         }

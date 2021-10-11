@@ -4,7 +4,12 @@ int val;
 
         public int eval() { return val; }
 
-        public ASTNum(int n)
+    @Override
+    public void compile(CodeBlock c) {
+        c.emit("sipush " + c);
+    }
+
+    public ASTNum(int n)
         {
 	   val = n;
         }
