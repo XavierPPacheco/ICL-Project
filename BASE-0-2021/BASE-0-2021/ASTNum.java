@@ -6,7 +6,7 @@ int val;
 
     @Override
     public void compile(CodeBlock c) {
-        c.emit("sipush " + c);
+        c.emit("sipush " + val);
     }
 
     public ASTNum(int n)

@@ -18,17 +18,6 @@
 
        ; place your bytecodes here between START and END
        ; START
-
-       sipush 10
-       sipush 20
-       iadd
-       sipush 2
-       imul
-       sipush -2
-       imul
-       sipush 2
-       iadd
-
        ; END
 
 
