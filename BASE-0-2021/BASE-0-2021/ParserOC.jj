@@ -80,7 +80,9 @@ ASTNode t1,t2;
 Token tok;
 }
 {
-     t1 = Term() ( ( tok=<PLUS> | tok=<MINUS>) t2=Term()
+
+
+     t1 = Term() ( ( tok=<PLUS> | tok=<MINUS> ) t2=Term()
 
                  { if (tok.kind == PLUS)
                          t1 = new ASTAdd(t1,t2);
@@ -117,7 +119,7 @@ ASTNode Fact() :
 Token tok;}
 {
    ( tok=<Num> { t1 = new ASTNum(Integer.parseInt(tok.image)); } |
-     <LPAR> t1=Exp() <RPAR> | <MINUS> {t1 = new ASTMinus(Fact());}
+     <LPAR> t1=Exp() <RPAR> |  <MINUS> {t1 = new ASTMinus(Fact());}
    )
   { return t1; }
 }

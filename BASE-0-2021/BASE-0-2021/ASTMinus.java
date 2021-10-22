@@ -6,7 +6,8 @@ public class ASTMinus implements ASTNode {
 
     @Override
     public void compile(CodeBlock c) {
-        c.emit("sipush -" + val.eval());
+        val.compile(c);
+        c.emit("ineg");
 
     }
 

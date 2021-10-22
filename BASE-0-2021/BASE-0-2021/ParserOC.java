@@ -126,7 +126,7 @@ Token tok;
       break;
     case MINUS:
       jj_consume_token(MINUS);
-                                       t1 = new ASTMinus(Fact());
+                                        t1 = new ASTMinus(Fact());
       break;
     default:
       jj_la1[4] = jj_gen;

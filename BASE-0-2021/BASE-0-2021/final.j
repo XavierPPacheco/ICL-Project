@@ -19,9 +19,9 @@
        ; place your bytecodes here between START and END
        ; START
 
-sipush 5
-sipush 5
-idiv
+sipush 10
+ineg
+ineg
        ; END
 
 
