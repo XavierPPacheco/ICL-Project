@@ -2,7 +2,7 @@ public class ASTMinus implements ASTNode {
 
     ASTNode val;
 
-    public int eval() { return -val.eval(); }
+    public int eval(Environment e) { return -val.eval(e); }
 
     @Override
     public void compile(CodeBlock c) {

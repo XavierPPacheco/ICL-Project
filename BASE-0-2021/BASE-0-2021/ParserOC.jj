@@ -119,7 +119,8 @@ ASTNode Fact() :
 Token tok;}
 {
    ( tok=<Num> { t1 = new ASTNum(Integer.parseInt(tok.image)); } |
-     <LPAR> t1=Exp() <RPAR> |  <MINUS> {t1 = new ASTMinus(Fact());}
+     <LPAR> t1=Exp() <RPAR> |  <MINUS> {t1 = new ASTMinus(Fact());} |
+     t1 = <Id>
    )
   { return t1; }
 }

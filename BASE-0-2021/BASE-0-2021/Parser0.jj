@@ -12,13 +12,16 @@ public class Parser0 {
     try {
     System.out.print( "> " );
     ASTNode ast = parser.Start();
-    System.out.println( ast.eval() );
+    Environment e = new Enviroment();
+    System.out.println( ast.eval(e) );
     } catch (Exception e) {
       System.out.println ("Syntax Error!");
       parser.ReInit(System.in);
     }
     }
   }
+
+}}
 
 }
 
