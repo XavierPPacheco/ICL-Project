@@ -16,8 +16,7 @@ ASTNode lhs, rhs;
         c.emit("iadd");
     }
 
-    public ASTAdd(ASTNode l, ASTNode r)
-        {
+    public ASTAdd(ASTNode l, ASTNode r) {
 		lhs = l; rhs = r;
         }
 

@@ -2,22 +2,6 @@
 /** ID lister. */
 public class Parser0 implements Parser0Constants {
 
-  /** Main entry point. */
-  public static void main(String args[]) {
-    Parser0 parser = new Parser0(System.in);
-
-    while (true) {
-    try {
-    System.out.print( "> " );
-    ASTNode ast = parser.Start();
-    System.out.println( ast.eval() );
-    } catch (Exception e) {
-      System.out.println ("Syntax Error!");
-      parser.ReInit(System.in);
-    }
-    }
-  }
-
   static final public ASTNode Start() throws ParseException {
 ASTNode t1;
     t1 = Exp();
@@ -313,5 +297,22 @@ Token tok;
   /** Disable tracing. */
   static final public void disable_tracing() {
   }
+
+  /** Main entry point.
+  public static void main(String args[]) {
+
+      // if has an argument --> compiler
+
+
+      // if has no agurments --> interpreter
+
+    Parser0 parser = new Parser0(System.in);
+    ICLInterpreter interpreter = new ICLInterpreter();
+    interpreter.run(parser);
+
+
+  }*/
+
+
 
 }

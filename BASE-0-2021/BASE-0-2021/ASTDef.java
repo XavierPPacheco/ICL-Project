@@ -1,6 +1,8 @@
+import java.util.List;
+
 public class ASTDef implements ASTNode{
 
-    List<Pair<String,ASTNode>>	init;
+    List<Pair<String,ASTNode>> init;
     ASTNode	body;
 
     @Override

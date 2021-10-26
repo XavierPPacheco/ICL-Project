@@ -6,7 +6,7 @@ public class Environment {
     Environment ancestor;
     Map<String, Integer> e;
 
-    Environment() {
+    public Environment() {
         ancestor = null;
         e = new HashMap<>();
     }

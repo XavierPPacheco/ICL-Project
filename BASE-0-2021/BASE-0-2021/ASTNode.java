@@ -25,7 +25,7 @@ class CodeBlock	{
 
     void dump(PrintStream f)  {
        // File output = new File("/home/xavier/Desktop/ICL/BASE-0-2021/BASE-0-2021/final.j");
-        File sample = new File("/home/xavier/Desktop/ICL/BASE-0-2021/BASE-0-2021/Main.j");
+        File sample = new File("/home/xavier/Desktop/ICL/BASE-0-2021/BASE-0-2021/Template.j");
         try{
             Scanner myReader = new Scanner(sample);
             boolean flag = false;
@@ -41,7 +41,9 @@ class CodeBlock	{
             for(int i = 0; i< pc;i++){
                 f.print("\n" + code[i]);
             }
+
             f.print("\n");
+
             while(myReader.hasNextLine())
                 f.println(myReader.nextLine());
             myReader.close();
