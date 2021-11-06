@@ -10,11 +10,12 @@ public class ICLCompiler {
             CodeBlock code = new CodeBlock();
 
             try {
-                System.out.print("> ");
                 ASTNode ast = parser.Start();
                 ast.compile(code);
                 PrintStream output = new PrintStream(new File("/home/xavier/Desktop/ICL/BASE-0-2021/BASE-0-2021/Main.j"));
                 code.dump(output);
+                System.out.println("Your file was compiled to Main.j");
+
             } catch (Exception e) {
                 System.out.println("Syntax Error!");
                 parser.ReInit(System.in);

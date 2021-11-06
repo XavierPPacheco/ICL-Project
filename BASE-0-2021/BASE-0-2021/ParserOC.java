@@ -2,24 +2,25 @@
 /** ID lister. */
 import java.io.PrintStream;
 import java.io.File;
-
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.ProcessBuilder;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.lang.Process;
 public class ParserOC implements ParserOCConstants {
 
   /** Main entry point. */
   public static void main(String args[]) {
-    ParserOC parser = new ParserOC(System.in);
+    //ParserOC parser = new ParserOC(System.in);
     CodeBlock code = new CodeBlock();
 
     try {
     System.out.print( "> " );
     ASTNode ast = parser.Start();
-
     ast.compile(code);
-
     PrintStream output = new PrintStream(new File("/home/xavier/Desktop/ICL/BASE-0-2021/BASE-0-2021/final.j"));
     code.dump(output);
-
-
     } catch (Exception e) {
       System.out.println ("Syntax Error!");
       parser.ReInit(System.in);
@@ -123,6 +124,9 @@ Token tok;
       jj_consume_token(MINUS);
                                         t1 = new ASTMinus(Fact());
       break;
+    case Id:
+      t1 = jj_consume_token(Id);
+      break;
     default:
       jj_la1[4] = jj_gen;
       jj_consume_token(-1);
@@ -148,7 +152,7 @@ Token tok;
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0xc0,0xc0,0x300,0x300,0x4a0,};
+      jj_la1_0 = new int[] {0xc0,0xc0,0x300,0x300,0x4b0,};
    }
 
   /** Constructor with InputStream. */

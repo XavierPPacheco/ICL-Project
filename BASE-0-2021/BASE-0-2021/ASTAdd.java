@@ -2,11 +2,10 @@ public class ASTAdd implements ASTNode {
 
 ASTNode lhs, rhs;
 
-        public int eval(Environment e)
-        { 
-	int v1 = lhs.eval(e);
-	int v2 = rhs.eval(e);
-        return v1+v2; 
+    public int eval(Environment e) {
+        int v1 = lhs.eval(e);
+        int v2 = rhs.eval(e);
+        return v1+v2;
 	}
 
     @Override

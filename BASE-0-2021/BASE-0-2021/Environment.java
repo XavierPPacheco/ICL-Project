@@ -25,14 +25,12 @@ public class Environment {
     }
 
     void assoc(String id, int val) {
-        if (e.containsKey(id))
-            throw new IDDeclaredTwice();
         e.put(id, val);
     }
 
     int	find(String	id) {
         if (!e.containsKey(id))
-            throw new UndeclaredID();
+            return ancestor.find(id);
         return e.get(id);
     }
 
