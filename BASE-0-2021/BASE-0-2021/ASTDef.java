@@ -10,16 +10,18 @@ public class ASTDef implements ASTNode{
     public int eval(Environment e) {
 
         List<Integer> vals = new LinkedList<>();
-        for(Bind b: binds)
-            vals.add(b.getNode().eval(e));
+
+
+
+      /*  for(Bind b: binds)
+            vals.add(b.getNode().eval(e));*/
 
         e = e.beginScope();
 
-        int index = 0;
-        for(Bind b: binds) {
-            e.assoc(b.getVar(), vals.get(index));
-            index++;
-        }
+        for(Bind b: binds)
+            e.assoc(b.getVar(), b.getNode().eval(e));
+
+
         int val = body.eval(e);
         e.endScope();
 

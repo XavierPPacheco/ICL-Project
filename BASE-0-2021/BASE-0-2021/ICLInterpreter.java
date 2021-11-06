@@ -14,7 +14,8 @@ public class ICLInterpreter {
                 Environment e = new Environment();
                 System.out.println(ast.eval(e));
             } catch (Exception e) {
-                System.out.println("Syntax Error!");
+                System.out.println(e);
+               // System.out.println("Syntax Error!");
                 parser.ReInit(System.in);
             }
         }
