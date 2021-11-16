@@ -8,19 +8,10 @@ public class ASTDef implements ASTNode{
 
     @Override
     public int eval(Environment e) {
-
-        List<Integer> vals = new LinkedList<>();
-
-
-
-      /*  for(Bind b: binds)
-            vals.add(b.getNode().eval(e));*/
-
         e = e.beginScope();
 
         for(Bind b: binds)
             e.assoc(b.getVar(), b.getNode().eval(e));
-
 
         int val = body.eval(e);
         e.endScope();
@@ -29,8 +20,17 @@ public class ASTDef implements ASTNode{
     }
 
     @Override
-    public void compile(CodeBlock c) {
+    public void compile(CodeBlock c, EnvironmentC e) {
+        e = e.beginScope();
 
+        for(Bind bind : binds) {
+            c.emit("aload_3");
+            bind.getNode().compile(c, e);
+            e.assoc(bind.getVar());
+        }
+        //c.emit("pop");
+        body.compile(c, e);
+        e.endScope();
     }
 
     public ASTDef(List<Bind> binds, ASTNode body) {

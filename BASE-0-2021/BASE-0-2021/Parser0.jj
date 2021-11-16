@@ -6,23 +6,6 @@ import java.util.ArrayList;
 /** ID lister. */
 public class Parser0 {
 
-  /** Main entry point.
-  public static void main(String args[]) {
-
-      // if has an argument --> compiler
-
-
-      // if has no agurments --> interpreter
-
-    Parser0 parser = new Parser0(System.in);
-    ICLInterpreter interpreter = new ICLInterpreter();
-    interpreter.run(parser);
-
-
-  }*/
-
-
-
 }
 
 

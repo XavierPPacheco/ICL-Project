@@ -344,21 +344,4 @@ Token token;
   static final public void disable_tracing() {
   }
 
-  /** Main entry point.
-  public static void main(String args[]) {
-
-      // if has an argument --> compiler
-
-
-      // if has no agurments --> interpreter
-
-    Parser0 parser = new Parser0(System.in);
-    ICLInterpreter interpreter = new ICLInterpreter();
-    interpreter.run(parser);
-
-
-  }*/
-
-
-
 }

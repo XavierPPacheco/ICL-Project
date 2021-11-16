@@ -5,8 +5,9 @@ int val;
         public int eval(Environment e) { return val; }
 
     @Override
-    public void compile(CodeBlock c) {
-        c.emit("sipush " + val);
+    public void compile(CodeBlock c, EnvironmentC e) {
+            //c.emit("aload_3");
+            c.emit("sipush " + val);
     }
 
     public ASTNum(int n)

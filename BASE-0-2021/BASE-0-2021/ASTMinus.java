@@ -5,8 +5,8 @@ public class ASTMinus implements ASTNode {
     public int eval(Environment e) { return -val.eval(e); }
 
     @Override
-    public void compile(CodeBlock c) {
-        val.compile(c);
+    public void compile(CodeBlock c, EnvironmentC e) {
+        val.compile(c, e);
         c.emit("ineg");
 
     }
