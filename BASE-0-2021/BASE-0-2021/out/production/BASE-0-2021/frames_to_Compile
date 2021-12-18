@@ -1,0 +1,4 @@
+java -jar jasmin.jar frame_0.j
+java -jar jasmin.jar frame_1.j
+java -jar jasmin.jar Main.j
+java Main

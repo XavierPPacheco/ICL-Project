@@ -1,5 +1,6 @@
 javacc Parser0.jj
 javac Parser0.java
+javac ICLCompiler.java
 java ICLCompiler input.icl
-java -jar jasmin.jar Main.j
-java Main
+chmod +x frames_to_Compile
+./frames_to_Compile

@@ -1,4 +1,4 @@
-class ASTAssign	implements	ASTNode {
+public class ASTAssign	implements	ASTNode {
 
     ASTNode lhs, rhs;
 

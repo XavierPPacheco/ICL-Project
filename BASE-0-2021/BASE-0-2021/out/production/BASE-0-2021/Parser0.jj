@@ -5,24 +5,8 @@ import java.util.ArrayList;
 
 /** ID lister. */
 public class Parser0 {
-
-  /** Main entry point.
-  public static void main(String args[]) {
-
-      // if has an argument --> compiler
-
-
-      // if has no agurments --> interpreter
-
-    Parser0 parser = new Parser0(System.in);
-    ICLInterpreter interpreter = new ICLInterpreter();
-    interpreter.run(parser);
-
-
-  }*/
-
-
-
+    public static void main(String args[]) {
+    }
 }
 
 
@@ -39,7 +23,7 @@ SKIP :
 
 TOKEN :
 {
-  < Num: (["0"-"9"]) + >
+ < Num: (["0"-"9"]) + >
   |
   < PLUS : "+" >
   |
@@ -48,6 +32,32 @@ TOKEN :
   < MUL : "*">
   |
   < DIV : "/">
+  |
+  < EQUALS : "=">
+  |
+  < DEREF : "!">
+  |
+  < COL : ":" >
+  |
+  < ASS : ":=">
+  |
+  < SEQ : ";">
+  |
+  < BEQ : "==">
+  |
+  < GT : ">">
+  |
+  < GTE : ">=">
+  |
+  < LT : "<">
+  |
+  < LTE : "<=">
+  |
+  < AND : "&&">
+  |
+  < OR : "||">
+  |
+  < NOPE : "~">
   |
   < LPAR : "(" >
   |
@@ -59,24 +69,77 @@ TOKEN :
   |
   < END : "end">
   |
-  < EQUALS : "=">
+  < NEW : "new">
+  |
+  < IF : "if">
+  |
+  < THEN : "then">
+  |
+  < ELSE : "else">
+  |
+  < WHILE : "while">
+  |
+  < DO : "do">
+  |
+  < PRINT : "print">
+  |
+  < PRINTLN : "println">
+  |
+  < REF : "ref" >
+  |
+  < INT : "int" >
+  |
+  < BOOL : "bool" >
+  |
+  < TRUE : "true">
+  |
+  < FALSE : "false">
   |
   < DSEMI : ";;" >
   |
   < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
-
 }
 
-ASTNode Start() :
+ASTNode Start():
 {
 ASTNode t1;
 }
 { (
-    t1 = Exp() <DSEMI>
+    t1 = ExpSeq() <DSEMI>
     | < EOF > { t1 = null; }
 )
 	{ return t1; }
 }
+
+ASTNode ExpSeq():
+{ ASTNode t1, t2; }
+{
+   (
+     t1 = ExpComp() (<SEQ> t2=ExpComp() {t1 = new ASTSeq(t1, t2);})*
+   )
+   { return t1;}
+}
+
+ASTNode ExpComp():
+{
+  Token tok;
+  ASTNode t1, t2;
+}
+{
+  t1 = Exp() ( (tok = <BEQ> | tok = <ASS> | tok = <GT> | tok = < GTE > | tok = < LT >
+   | tok = < LTE >| tok = < AND >| tok=< OR >) t2 = Exp()
+  				{
+                    if(tok.kind == ASS)
+                        t1 = new ASTAssign(t1, t2);
+                    else if(tok.kind == AND || tok.kind == OR)
+                        t1 = new ASTCompareBool(t1, t2, tok.image);
+                    else
+                        t1 = new ASTCompare(t1, t2, tok.image);
+  				}
+  		)?
+  {return t1;}
+}
+
 
 ASTNode Exp() :
 {
@@ -87,8 +150,9 @@ Token tok;
      t1 = Term() ( ( tok=<PLUS> | tok=<MINUS>) t2=Term()
 
                  { if (tok.kind == PLUS)
-                         t1 = new ASTAdd(t1,t2);
-                   else  t1 = new ASTSub(t1,t2);
+                        t1 = new ASTAdd(t1,t2);
+                   else
+                        t1 = new ASTSub(t1,t2);
                  }
 
                  )*
@@ -115,17 +179,27 @@ Token token;
 	
 }
 
+
 ASTNode Fact() :
-{ ASTNode t1, t2;
+{ ASTNode t1, t2, t3 = null;
  Token tok;
  List<Bind> binds = new ArrayList<Bind>();
  String id; }
 {
    ( tok=<Num> { t1 = new ASTNum(Integer.parseInt(tok.image)); }
+   | (tok=<TRUE> | tok =<FALSE>) { t1 = new ASTBool(tok.image.equals("true"));}
+   | < NEW > {t1 = new ASTRef(Fact());}
+   | <DEREF> {t1 = new ASTDeref(Fact());}
    | <LPAR> t1=Exp() <RPAR>
    | <MINUS> {t1 = new ASTMinus(Fact());}
+   | < NOPE > { t1 = new ASTNot(ExpSeq()); }
    | < DEF > (tok = <Id> { id = tok.image;} <EQUALS> {t2 = Exp(); binds.add(new Bind(id, t2)); })+ <IN> { t1 = new ASTDef(binds, Exp());} <END>
-   | tok = <Id> { t1 = new ASTId(tok.image);}
+   //| tok = <Id> { t1 = new ASTId(tok.image);}
+   | <IF> t1 = ExpSeq() <THEN> t2 = ExpSeq() (<ELSE> t3 = ExpSeq())? <END> {t1 = new ASTIf(t1, t2, t3);}
+   | <WHILE> t1 = ExpSeq() <DO> t2 = ExpSeq() <END> {t1 = new ASTWhile(t1, t2
+   );}
+   | <PRINT> {t1= new ASTPrintln(Fact(), false); }
+   | <PRINTLN> {t1 = new ASTPrintln(Fact(), true); }
    )   
   { return t1; }
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 /** ID lister. */
 public class Parser0 implements Parser0Constants {
+    public static void main(String args[]) {
+    }
 
   static final public ASTNode Start() throws ParseException {
 ASTNode t1;
@@ -15,11 +17,12 @@ ASTNode t1;
     case LPAR:
     case DEF:
     case NEW:
+    case IF:
+    case WHILE:
     case PRINT:
     case PRINTLN:
     case TRUE:
     case FALSE:
-    case Id:
       t1 = ExpSeq();
       jj_consume_token(DSEMI);
       break;
@@ -190,7 +193,7 @@ Token token;
   }
 
   static final public ASTNode Fact() throws ParseException {
-  ASTNode t1, t2;
+  ASTNode t1, t2, t3 = null;
  Token tok;
  List<Bind> binds = new ArrayList<Bind>();
  String id;
@@ -213,7 +216,7 @@ Token token;
         jj_consume_token(-1);
         throw new ParseException();
       }
-                                   t1 = new ASTBool(n.image.equals("true"));
+                                   t1 = new ASTBool(tok.image.equals("true"));
       break;
     case NEW:
       jj_consume_token(NEW);
@@ -234,7 +237,7 @@ Token token;
       break;
     case NOPE:
       jj_consume_token(NOPE);
-                t=new ASTNot(ExpSeq());
+                t1 = new ASTNot(ExpSeq());
       break;
     case DEF:
       jj_consume_token(DEF);
@@ -257,20 +260,42 @@ Token token;
                                                                                                           t1 = new ASTDef(binds, Exp());
       jj_consume_token(END);
       break;
-    case Id:
-      tok = jj_consume_token(Id);
-                  t1 = new ASTId(tok.image);
+    case IF:
+      jj_consume_token(IF);
+      t1 = ExpSeq();
+      jj_consume_token(THEN);
+      t2 = ExpSeq();
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case ELSE:
+        jj_consume_token(ELSE);
+        t3 = ExpSeq();
+        break;
+      default:
+        jj_la1[10] = jj_gen;
+        ;
+      }
+      jj_consume_token(END);
+                                                                            t1 = new ASTIf(t1, t2, t3);
+      break;
+    case WHILE:
+      jj_consume_token(WHILE);
+      t1 = ExpSeq();
+      jj_consume_token(DO);
+      t2 = ExpSeq();
+      jj_consume_token(END);
+                                                     t1 = new ASTWhile(t1, t2
+   );
       break;
     case PRINT:
       jj_consume_token(PRINT);
-                t1= new ASTPrintln(Fact(), false);
+              t1= new ASTPrintln(Fact(), false);
       break;
     case PRINTLN:
       jj_consume_token(PRINTLN);
-                  t1 = new ASTPrintln(Fact(), true);
+                t1 = new ASTPrintln(Fact(), true);
       break;
     default:
-      jj_la1[10] = jj_gen;
+      jj_la1[11] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -288,7 +313,7 @@ Token token;
   static public Token jj_nt;
   static private int jj_ntk;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[11];
+  static final private int[] jj_la1 = new int[12];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
@@ -296,10 +321,10 @@ Token token;
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x12c008a1,0x4000,0x3fa000,0x3fa000,0xc0,0xc0,0x300,0x300,0x0,0x0,0x12c008a0,};
+      jj_la1_0 = new int[] {0x32c008a1,0x4000,0x3fa000,0x3fa000,0xc0,0xc0,0x300,0x300,0x0,0x0,0x80000000,0x32c008a0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x58c,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x180,0x400,0x58c,};
+      jj_la1_1 = new int[] {0x18d,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x180,0x400,0x0,0x18d,};
    }
 
   /** Constructor with InputStream. */
@@ -320,7 +345,7 @@ Token token;
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 11; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 12; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -334,7 +359,7 @@ Token token;
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 11; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 12; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -351,7 +376,7 @@ Token token;
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 11; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 12; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -361,7 +386,7 @@ Token token;
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 11; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 12; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -377,7 +402,7 @@ Token token;
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 11; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 12; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -386,7 +411,7 @@ Token token;
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 11; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 12; i++) jj_la1[i] = -1;
   }
 
   static private Token jj_consume_token(int kind) throws ParseException {
@@ -442,7 +467,7 @@ Token token;
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 11; i++) {
+    for (int i = 0; i < 12; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {

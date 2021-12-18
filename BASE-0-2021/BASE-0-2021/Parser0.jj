@@ -5,7 +5,8 @@ import java.util.ArrayList;
 
 /** ID lister. */
 public class Parser0 {
-
+    public static void main(String args[]) {
+    }
 }
 
 
@@ -22,7 +23,7 @@ SKIP :
 
 TOKEN :
 {
-  < Num: (["0"-"9"]) + >
+ < Num: (["0"-"9"]) + >
   |
   < PLUS : "+" >
   |
@@ -97,7 +98,6 @@ TOKEN :
   < DSEMI : ";;" >
   |
   < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
-
 }
 
 ASTNode Start():
@@ -181,22 +181,25 @@ Token token;
 
 
 ASTNode Fact() :
-{ ASTNode t1, t2;
+{ ASTNode t1, t2, t3 = null;
  Token tok;
  List<Bind> binds = new ArrayList<Bind>();
  String id; }
 {
    ( tok=<Num> { t1 = new ASTNum(Integer.parseInt(tok.image)); }
-   | (tok=<TRUE> | tok =<FALSE>) { t1 = new ASTBool(n.image.equals("true"));}
+   | (tok=<TRUE> | tok =<FALSE>) { t1 = new ASTBool(tok.image.equals("true"));}
    | < NEW > {t1 = new ASTRef(Fact());}
    | <DEREF> {t1 = new ASTDeref(Fact());}
    | <LPAR> t1=Exp() <RPAR>
    | <MINUS> {t1 = new ASTMinus(Fact());}
-   | < NOPE > { t=new ASTNot(ExpSeq()); }
+   | < NOPE > { t1 = new ASTNot(ExpSeq()); }
    | < DEF > (tok = <Id> { id = tok.image;} <EQUALS> {t2 = Exp(); binds.add(new Bind(id, t2)); })+ <IN> { t1 = new ASTDef(binds, Exp());} <END>
-   | tok = <Id> { t1 = new ASTId(tok.image);}
-   | < PRINT > {t1= new ASTPrintln(Fact(), false); }
-   | < PRINTLN > {t1 = new ASTPrintln(Fact(), true); }
+   //| tok = <Id> { t1 = new ASTId(tok.image);}
+   | <IF> t1 = ExpSeq() <THEN> t2 = ExpSeq() (<ELSE> t3 = ExpSeq())? <END> {t1 = new ASTIf(t1, t2, t3);}
+   | <WHILE> t1 = ExpSeq() <DO> t2 = ExpSeq() <END> {t1 = new ASTWhile(t1, t2
+   );}
+   | <PRINT> {t1= new ASTPrintln(Fact(), false); }
+   | <PRINTLN> {t1 = new ASTPrintln(Fact(), true); }
    )   
   { return t1; }
 }
