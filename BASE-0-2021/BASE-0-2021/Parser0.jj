@@ -194,7 +194,7 @@ ASTNode Fact() :
    | <MINUS> {t1 = new ASTMinus(Fact());}
    | < NOPE > { t1 = new ASTNot(ExpSeq()); }
    | < DEF > (tok = <Id> { id = tok.image;} <EQUALS> {t2 = Exp(); binds.add(new Bind(id, t2)); })+ <IN> { t1 = new ASTDef(binds, Exp());} <END>
-   //| tok = <Id> { t1 = new ASTId(tok.image);}
+   | tok = <Id> { t1 = new ASTId(tok.image);}
    | <IF> t1 = ExpSeq() <THEN> t2 = ExpSeq() (<ELSE> t3 = ExpSeq())? <END> {t1 = new ASTIf(t1, t2, t3);}
    | <WHILE> t1 = ExpSeq() <DO> t2 = ExpSeq() <END> {t1 = new ASTWhile(t1, t2
    );}

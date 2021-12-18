@@ -23,6 +23,7 @@ ASTNode t1;
     case PRINTLN:
     case TRUE:
     case FALSE:
+    case Id:
       t1 = ExpSeq();
       jj_consume_token(DSEMI);
       break;
@@ -260,6 +261,10 @@ Token token;
                                                                                                           t1 = new ASTDef(binds, Exp());
       jj_consume_token(END);
       break;
+    case Id:
+      tok = jj_consume_token(Id);
+                  t1 = new ASTId(tok.image);
+      break;
     case IF:
       jj_consume_token(IF);
       t1 = ExpSeq();
@@ -324,7 +329,7 @@ Token token;
       jj_la1_0 = new int[] {0x32c008a1,0x4000,0x3fa000,0x3fa000,0xc0,0xc0,0x300,0x300,0x0,0x0,0x80000000,0x32c008a0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x18d,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x180,0x400,0x0,0x18d,};
+      jj_la1_1 = new int[] {0x58d,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x180,0x400,0x0,0x58d,};
    }
 
   /** Constructor with InputStream. */
