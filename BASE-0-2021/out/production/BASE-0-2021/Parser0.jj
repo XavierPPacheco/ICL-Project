@@ -1,25 +1,10 @@
 PARSER_BEGIN(Parser0)
 
+import java.util.List;
+import java.util.ArrayList;
 
 /** ID lister. */
 public class Parser0 {
-
-  /** Main entry point.
-  public static void main(String args[]) {
-
-      // if has an argument --> compiler
-
-
-      // if has no agurments --> interpreter
-
-    Parser0 parser = new Parser0(System.in);
-    ICLInterpreter interpreter = new ICLInterpreter();
-    interpreter.run(parser);
-
-
-  }*/
-
-
 
 }
 
@@ -32,12 +17,11 @@ SKIP :
   " "
 | "\t"
 | "\r"
+| "\n"
 }
 
 TOKEN :
-{ 
-  < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
-  |
+{
   < Num: (["0"-"9"]) + >
   |
   < PLUS : "+" >
@@ -52,15 +36,28 @@ TOKEN :
   |
   < RPAR : ")" >
   |
-  < EL: "\n" >
+  < DEF: "def" >
+  |
+  < IN : "in">
+  |
+  < END : "end">
+  |
+  < EQUALS : "=">
+  |
+  < DSEMI : ";;" >
+  |
+  < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
+
 }
 
 ASTNode Start() :
 {
 ASTNode t1;
 }
-{
-   t1 = Exp() <EL>
+{ (
+    t1 = Exp() <DSEMI>
+    | < EOF > { t1 = null; }
+)
 	{ return t1; }
 }
 
@@ -77,8 +74,7 @@ Token tok;
                    else  t1 = new ASTSub(t1,t2);
                  }
 
-                 )
-                *
+                 )*
 
     
      { return t1; }
@@ -95,7 +91,7 @@ Token token;
       {if(token.kind == MUL)
         t1 = new ASTMul(t1,t2);
         else t1 = new ASTDiv(t1,t2);
-}
+      }
       ) *
 
      { return t1; }
@@ -103,11 +99,16 @@ Token token;
 }
 
 ASTNode Fact() :
-{ASTNode t1;
-Token tok;}
+{ ASTNode t1, t2;
+ Token tok;
+ List<Bind> binds = new ArrayList<Bind>();
+ String id; }
 {
-   ( tok=<Num> { t1 = new ASTNum(Integer.parseInt(tok.image)); } | 
-     <LPAR> t1=Exp() <RPAR> | <MINUS> {t1 = new ASTMinus(Fact());}
+   ( tok=<Num> { t1 = new ASTNum(Integer.parseInt(tok.image)); }
+   | <LPAR> t1=Exp() <RPAR>
+   | <MINUS> {t1 = new ASTMinus(Fact());}
+   | < DEF > (tok = <Id> { id = tok.image;} <EQUALS> {t2 = Exp(); binds.add(new Bind(id, t2)); })+ <IN> { t1 = new ASTDef(binds, Exp());} <END>
+   | tok = <Id> { t1 = new ASTId(tok.image);}
    )   
-  { return t1; }  
+  { return t1; }
 }

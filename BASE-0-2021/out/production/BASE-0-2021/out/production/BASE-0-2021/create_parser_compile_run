@@ -1,0 +1,5 @@
+javacc Parser0.jj
+javac Parser0.java
+java ICLCompiler input.icl
+java -jar jasmin.jar Main.j
+java Main

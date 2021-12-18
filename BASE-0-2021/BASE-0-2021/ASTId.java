@@ -3,8 +3,8 @@ public class ASTId implements ASTNode{
     String id;
 
     @Override
-    public int eval(Environment e) {
-        return	e.find(id);
+    public IValue eval(Environment<IValue> e) {
+        return e.find(id);
     }
 
     @Override

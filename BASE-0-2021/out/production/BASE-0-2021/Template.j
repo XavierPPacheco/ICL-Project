@@ -13,15 +13,15 @@
        .limit locals 10 
        .limit stack 256
 
+	; setup local variables:
+
        ;    1 - the PrintStream object held in java.lang.System.out
        getstatic java/lang/System/out Ljava/io/PrintStream;
 
        ; place your bytecodes here between START and END
        ; START
-
-      
-
-
+       
+          
        ; END
 
 

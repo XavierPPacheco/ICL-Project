@@ -7,13 +7,13 @@ public class ASTDef implements ASTNode{
     ASTNode	body;
 
     @Override
-    public int eval(Environment e) {
+    public IValue eval(Environment<IValue> e) {
         e = e.beginScope();
 
         for(Bind b: binds)
             e.assoc(b.getVar(), b.getNode().eval(e));
 
-        int val = body.eval(e);
+        IValue val = body.eval(e);
         e.endScope();
 
         return val;

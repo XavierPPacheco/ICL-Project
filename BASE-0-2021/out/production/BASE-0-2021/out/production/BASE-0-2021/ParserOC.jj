@@ -1,0 +1,122 @@
+PARSER_BEGIN(ParserOC)
+
+
+/** ID lister. */
+import java.io.PrintStream;
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.ProcessBuilder;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.lang.Process;
+public class ParserOC {
+
+  /** Main entry point. */
+  public static void main(String args[]) {
+    //ParserOC parser = new ParserOC(System.in);
+    CodeBlock code = new CodeBlock();
+
+    try {
+    System.out.print( "> " );
+    ASTNode ast = parser.Start();
+    ast.compile(code);
+    PrintStream output = new PrintStream(new File("/home/xavier/Desktop/ICL/BASE-0-2021/BASE-0-2021/final.j"));
+    code.dump(output);
+    } catch (Exception e) {
+      System.out.println ("Syntax Error!");
+      parser.ReInit(System.in);
+    }
+  }
+
+}
+
+PARSER_END(ParserOC)
+
+SKIP :
+{
+  " "
+| "\t"
+| "\r"
+}
+
+TOKEN :
+{
+  < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
+  |
+  < Num: (["0"-"9"]) + >
+  |
+  < PLUS : "+" >
+  |
+  < MINUS : "-">
+  |
+  < MUL : "*">
+  |
+  < DIV : "/">
+  |
+  < LPAR : "(" >
+  |
+  < RPAR : ")" >
+  |
+  < EL: "\n" >
+}
+
+ASTNode Start() :
+{
+ASTNode t1;
+}
+{
+   t1 = Exp() <EL>
+	{ return t1; }
+}
+
+ASTNode Exp() :
+{
+ASTNode t1,t2;
+Token tok;
+}
+{
+
+
+     t1 = Term() ( ( tok=<PLUS> | tok=<MINUS> ) t2=Term()
+
+                 { if (tok.kind == PLUS)
+                         t1 = new ASTAdd(t1,t2);
+                   else  t1 = new ASTSub(t1,t2);
+                 }
+
+                 )
+                *
+
+
+     { return t1; }
+
+}
+
+ASTNode Term() :
+{
+ASTNode t1,t2;
+Token token;
+}
+{
+     t1=Fact() (( token=<MUL> | token =<DIV> ) t2=Fact()
+      {if(token.kind == MUL)
+        t1 = new ASTMul(t1,t2);
+        else t1 = new ASTDiv(t1,t2);
+}
+      ) *
+
+     { return t1; }
+
+}
+
+ASTNode Fact() :
+{ASTNode t1;
+Token tok;}
+{
+   ( tok=<Num> { t1 = new ASTNum(Integer.parseInt(tok.image)); } |
+     <LPAR> t1=Exp() <RPAR> |  <MINUS> {t1 = new ASTMinus(Fact());} |
+     t1 = <Id>
+   )
+  { return t1; }
+}
