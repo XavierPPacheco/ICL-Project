@@ -10,7 +10,6 @@ public class ICLInterpreter {
 
         while (true) {
             try {
-                System.out.println("\nYAAAAA\n");
                 System.out.print("> ");
                 ast = parser.Start();
                 Environment<IValue> e = new Environment();
