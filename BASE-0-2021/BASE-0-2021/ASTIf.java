@@ -24,6 +24,7 @@ public class ASTIf implements ASTNode{
 
     @Override
     public void compile(CodeBlock c, EnvironmentC env) {
+       /*
         // TODO Auto-generated method stub
         guard.compile(c, env);
         String l1 = c.newLabel();
@@ -34,6 +35,7 @@ public class ASTIf implements ASTNode{
         c.emit(l1 + ":");
         else_node.compile(c, env);
         c.emit(l2 + ":");
+        */
     }
 
 

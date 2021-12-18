@@ -20,6 +20,7 @@ public class ASTWhile implements ASTNode {
     @Override
     public void compile(CodeBlock c, EnvironmentC env) {
         // TODO Auto-generated method stub
+        /*
         String l1 = c.newLabel();
         String l2 = c.newLabel();
         c.emit(l1 + ":");
@@ -28,6 +29,7 @@ public class ASTWhile implements ASTNode {
         body.compile(c, env);
         c.emit("goto " + l1);
         c.emit(l2 + ":");
+         */
     }
 
 }
