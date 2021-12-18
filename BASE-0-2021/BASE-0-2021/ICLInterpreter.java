@@ -6,16 +6,21 @@ public class ICLInterpreter {
     public static void main(String args[]) {
 
         Parser0 parser = new Parser0(System.in);
+        ASTNode ast;
 
         while (true) {
             try {
+                System.out.println("\nYAAAAA\n");
                 System.out.print("> ");
-                ASTNode ast = parser.Start();
-                Environment e = new Environment();
-                System.out.println(ast.eval(e));
+                ast = parser.Start();
+                Environment<IValue> e = new Environment();
+                IValue v = ast.eval(e);
+
+                if(v != null)
+                    System.out.println(v);
             } catch (Exception e) {
                 System.out.println(e);
-               // System.out.println("Syntax Error!");
+                System.out.println("Syntax Error!");
                 parser.ReInit(System.in);
             }
         }

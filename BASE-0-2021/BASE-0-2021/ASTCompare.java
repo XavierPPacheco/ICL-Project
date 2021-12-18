@@ -3,7 +3,7 @@ public class ASTCompare implements ASTNode{
     ASTNode lhs, rhs;
     String operation;
 
-    public ASTCompare(String operation, ASTNode lhs, ASTNode rhs){
+    public ASTCompare( ASTNode lhs, ASTNode rhs,String operation){
         this.lhs = lhs;
         this.rhs = rhs;
         this.operation =operation;

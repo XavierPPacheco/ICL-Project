@@ -19,21 +19,71 @@ public interface Parser0Constants {
   /** RegularExpression Id. */
   int DIV = 9;
   /** RegularExpression Id. */
-  int LPAR = 10;
+  int EQUALS = 10;
   /** RegularExpression Id. */
-  int RPAR = 11;
+  int DEREF = 11;
   /** RegularExpression Id. */
-  int DEF = 12;
+  int COL = 12;
   /** RegularExpression Id. */
-  int IN = 13;
+  int ASS = 13;
   /** RegularExpression Id. */
-  int END = 14;
+  int SEQ = 14;
   /** RegularExpression Id. */
-  int EQUALS = 15;
+  int BEQ = 15;
   /** RegularExpression Id. */
-  int DSEMI = 16;
+  int GT = 16;
   /** RegularExpression Id. */
-  int Id = 17;
+  int GTE = 17;
+  /** RegularExpression Id. */
+  int LT = 18;
+  /** RegularExpression Id. */
+  int LTE = 19;
+  /** RegularExpression Id. */
+  int AND = 20;
+  /** RegularExpression Id. */
+  int OR = 21;
+  /** RegularExpression Id. */
+  int NOPE = 22;
+  /** RegularExpression Id. */
+  int LPAR = 23;
+  /** RegularExpression Id. */
+  int RPAR = 24;
+  /** RegularExpression Id. */
+  int DEF = 25;
+  /** RegularExpression Id. */
+  int IN = 26;
+  /** RegularExpression Id. */
+  int END = 27;
+  /** RegularExpression Id. */
+  int NEW = 28;
+  /** RegularExpression Id. */
+  int IF = 29;
+  /** RegularExpression Id. */
+  int THEN = 30;
+  /** RegularExpression Id. */
+  int ELSE = 31;
+  /** RegularExpression Id. */
+  int WHILE = 32;
+  /** RegularExpression Id. */
+  int DO = 33;
+  /** RegularExpression Id. */
+  int PRINT = 34;
+  /** RegularExpression Id. */
+  int PRINTLN = 35;
+  /** RegularExpression Id. */
+  int REF = 36;
+  /** RegularExpression Id. */
+  int INT = 37;
+  /** RegularExpression Id. */
+  int BOOL = 38;
+  /** RegularExpression Id. */
+  int TRUE = 39;
+  /** RegularExpression Id. */
+  int FALSE = 40;
+  /** RegularExpression Id. */
+  int DSEMI = 41;
+  /** RegularExpression Id. */
+  int Id = 42;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -50,12 +100,37 @@ public interface Parser0Constants {
     "\"-\"",
     "\"*\"",
     "\"/\"",
+    "\"=\"",
+    "\"!\"",
+    "\":\"",
+    "\":=\"",
+    "\";\"",
+    "\"==\"",
+    "\">\"",
+    "\">=\"",
+    "\"<\"",
+    "\"<=\"",
+    "\"&&\"",
+    "\"||\"",
+    "\"~\"",
     "\"(\"",
     "\")\"",
     "\"def\"",
     "\"in\"",
     "\"end\"",
-    "\"=\"",
+    "\"new\"",
+    "\"if\"",
+    "\"then\"",
+    "\"else\"",
+    "\"while\"",
+    "\"do\"",
+    "\"print\"",
+    "\"println\"",
+    "\"ref\"",
+    "\"int\"",
+    "\"bool\"",
+    "\"true\"",
+    "\"false\"",
     "\";;\"",
     "<Id>",
   };

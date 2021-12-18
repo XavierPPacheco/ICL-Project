@@ -1,15 +1,17 @@
-class	ASTPrintln	implements	ASTNode {
-
-
-
+class ASTPrintln implements	ASTNode {
     ASTNode arg;
-    public ASTPrintln(ASTNode arg){
+    boolean line;
+    public ASTPrintln(ASTNode arg, boolean line){
         this.arg = arg;
+        this.line = line;
     }
     @Override
-    public IValue eval(Environment<IValue> e) {
+    public IValue eval(Environment<IValue> e ) {
         IValue v1 = arg.eval(e);
-        System.out.println(v1.toString());
+        if (line)
+            System.out.println(v1.toString());
+        else
+            System.out.print(v1.toString());
         return v1;
     }
 
