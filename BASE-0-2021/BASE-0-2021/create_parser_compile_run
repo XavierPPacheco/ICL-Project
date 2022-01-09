@@ -3,4 +3,6 @@ javac Parser0.java
 javac ICLCompiler.java
 java ICLCompiler input.icl
 chmod +x frames_to_Compile
+chmod +x refs_to_Compile
 ./frames_to_Compile
+./refs_to_Compile

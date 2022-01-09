@@ -13,21 +13,20 @@ public class ASTBool implements ASTNode {
     }
 
     @Override
-    public void compile(CodeBlock c, EnvironmentC env) {
+    public void compile(CodeBlock c, EnvironmentC env, EnvironmentT envT) {
         if(b.getval())
             c.emit("sipush 1");
         else
             c.emit("sipush 0");
     }
 
-    /*
+
     @Override
     public IType typecheck(EnvironmentT env) {
-        // TODO Auto-generated method stub
         return new TBool();
     }
 
-     */
+
 
 
 }

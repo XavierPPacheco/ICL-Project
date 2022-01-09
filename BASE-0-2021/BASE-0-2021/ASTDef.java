@@ -20,17 +20,38 @@ public class ASTDef implements ASTNode{
     }
 
     @Override
-    public void compile(CodeBlock c, EnvironmentC e) {
+    public void compile(CodeBlock c, EnvironmentC e, EnvironmentT envT) {
         e = e.beginScope();
 
         for(Bind bind : binds) {
             c.emit("aload_3");
-            bind.getNode().compile(c, e);
+            bind.getNode().compile(c, e,envT);
             e.assoc(bind.getVar());
         }
         //c.emit("pop");
-        body.compile(c, e);
+        body.compile(c, e, envT);
         e.endScope();
+    }
+
+    private EnvironmentT addTypes(EnvironmentT env) {
+        List<IType> vals = new LinkedList<>();
+        for(Bind b: binds) {
+            IType t = b.getNode().typecheck(env);
+            vals.add(t);
+            if(!b.getType().equals(t))
+                throw new TypeError("Type mismatch");
+        }
+        env = env.beginScope();
+        int index = 0;
+        for(Bind b: binds) {
+            env.assoc(b.getVar(), vals.get(index));
+            index++;
+        }
+        return env;
+    }
+    @Override
+    public IType typecheck(EnvironmentT envT) {
+        return body.typecheck(addTypes(envT));
     }
 
     public ASTDef(List<Bind> binds, ASTNode body) {

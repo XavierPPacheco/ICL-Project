@@ -15,8 +15,8 @@ public class ICLInterpreter {
                 Environment<IValue> e = new Environment();
                 IValue v = ast.eval(e);
 
-                if(v != null)
-                    System.out.println(v);
+                //if(v != null)
+                //    System.out.println(v);
             } catch (Exception e) {
                 System.out.println(e);
                 System.out.println("Syntax Error!");

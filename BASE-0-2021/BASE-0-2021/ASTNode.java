@@ -6,17 +6,24 @@ import java.util.Scanner;
 public interface ASTNode {
 
     IValue eval(Environment<IValue> e);
-    void compile(CodeBlock c, EnvironmentC e);
+    void compile(CodeBlock c, EnvironmentC envC, EnvironmentT envT);
+    IType typecheck(EnvironmentT envT);
 
 }
 
 class CodeBlock	{
     String	code[];
-    int	pc;
+    int	pc, tag;
 
     public CodeBlock() {
         this.pc = 0;
+        this.tag = 0;
         code = new String[250];
+    }
+
+    public String newTag() {
+        tag = tag + 1;
+        return "L" + tag;
     }
 
     void emit(String opcode){

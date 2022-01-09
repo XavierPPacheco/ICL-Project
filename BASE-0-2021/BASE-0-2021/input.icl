@@ -1,5 +1,1 @@
-def x = 2
-y = 3 in
-def k =x+ y in
-x+y+k 
- end end;;
+def a = new 5 in a := !a + 1; println !a end;;

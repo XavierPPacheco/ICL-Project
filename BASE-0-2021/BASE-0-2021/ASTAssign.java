@@ -15,11 +15,25 @@ public class ASTAssign	implements	ASTNode {
             ((VCell) v1).set(v2);
             return v2;
         }
-        throw new InterpretorError("illegal	arguments	to	:=	operator");
+        throw new InterpretorError("illegal	arguments to operator :=");
     }
 
     @Override
-    public void compile(CodeBlock c, EnvironmentC e) {
-
+    public void compile(CodeBlock c, EnvironmentC env, EnvironmentT envT) {
+        lhs.compile(c, env, envT);
+        TRef t = (TRef) lhs.typecheck(envT);
+        c.emit("checkcast " + t.toString());
+        rhs.compile(c, env, envT);
+        c.emit("putfield " + t.toString() + "/v " + t.getreftype().toString());
     }
+
+    @Override
+    public IType typecheck(EnvironmentT env) {
+        IType lt = lhs.typecheck(env);
+        if (lt instanceof TRef) {
+            return rhs.typecheck(env);
+        }
+        throw new TypeError("argument is not a reference in assign");
+    }
+
 }

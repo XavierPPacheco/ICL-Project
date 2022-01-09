@@ -14,10 +14,21 @@ ASTNode lhs, rhs;
 	}
 
     @Override
-    public void compile(CodeBlock c, EnvironmentC e) {
-        lhs.compile(c, e);
-        rhs.compile(c, e);
+    public void compile(CodeBlock c, EnvironmentC envC, EnvironmentT envT) {
+        lhs.compile(c, envC, envT);
+        rhs.compile(c, envC, envT);
         c.emit("iadd");
+    }
+
+    @Override
+    public IType typecheck(EnvironmentT env) {
+        IType lt = lhs.typecheck(env);
+        if(lt instanceof TInt) {
+            IType rt = rhs.typecheck(env);
+            if(rt instanceof TInt)
+                return new TInt();
+        }
+        throw new TypeError("argument is not an int in add operation");
     }
 
     public ASTAdd(ASTNode l, ASTNode r) {

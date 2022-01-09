@@ -11,28 +11,24 @@ public class ASTDeref implements ASTNode {
         IValue val = v.eval(env);
         if (val instanceof VCell)
             return ((VCell) val).get();
-        throw new InterpretorError("De ref: argument is not a reference");
+        throw new InterpretorError("argument is not a reference in deref operation");
     }
 
     @Override
-    public void compile(CodeBlock c, EnvironmentC env) {
-        /*
-        v.compile(c, env, envT);
+    public void compile(CodeBlock c, EnvironmentC envC, EnvironmentT envT) {
+        v.compile(c, envC, envT);
         TRef t = (TRef) v.typecheck(envT);
         c.emit("checkcast " + t.toString());
         c.emit("getfield " + t.toString() + "/v " + t.getreftype().toString());
-         */
     }
-    /*
+
     @Override
     public IType typecheck(EnvironmentT env) {
         IType r = v.typecheck(env);
         if (r instanceof TRef)
             return ((TRef) r).getreftype();
-        throw new TypeError("De ref: argument is not a reference");
+        throw new TypeError("argument is not a reference in deref operation");
     }
-
-     */
 
 }
 

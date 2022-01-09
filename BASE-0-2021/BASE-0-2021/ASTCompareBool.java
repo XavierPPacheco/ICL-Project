@@ -16,7 +16,7 @@ public class ASTCompareBool implements  ASTNode{
         IValue rvalue = rhs.eval(e);
 
         if(!(lvalue instanceof VBool) || !(rvalue instanceof VBool))
-            throw new InterpretorError("argument is not a boolean");
+            throw new InterpretorError("argument is not a boolean in comparator");
 
         switch (operation){
             case "&&":
@@ -28,7 +28,19 @@ public class ASTCompareBool implements  ASTNode{
     }
 
     @Override
-    public void compile(CodeBlock c, EnvironmentC e) {
+    public void compile(CodeBlock c, EnvironmentC envC, EnvironmentT envT) {
+        lhs.compile(c, envC, envT);
+        rhs.compile(c, envC, envT);
+        switch (operation){
+            case "&&":
+                c.emit("iand");
+            case "||" :
+                c.emit("ior");
+        }
+    }
 
+    @Override
+    public IType typecheck(EnvironmentT envT) {
+        return new TBool();
     }
 }

@@ -19,24 +19,35 @@ public class ASTIf implements ASTNode{
             else
                 return null;
         }
-        throw new InterpretorError("if: argument is not a boolean");
+        throw new InterpretorError("argument is not a boolean in if");
     }
 
     @Override
-    public void compile(CodeBlock c, EnvironmentC env) {
-       /*
-        // TODO Auto-generated method stub
-        guard.compile(c, env);
-        String l1 = c.newLabel();
-        String l2 = c.newLabel();
-        c.emit("ifeq " + l1);
-        then_node.compile(c, env);
-        c.emit("goto " + l2);
-        c.emit(l1 + ":");
-        else_node.compile(c, env);
-        c.emit(l2 + ":");
-        */
+    public void compile(CodeBlock c, EnvironmentC envC, EnvironmentT envT) {
+        guard.compile(c, envC, envT);
+        String guardTag = c.newTag();
+        String endTag = c.newTag();
+        c.emit("ifeq " + guardTag);
+        then_node.compile(c, envC, envT);
+        c.emit("goto " + endTag);
+        c.emit(guardTag + ":");
+        else_node.compile(c, envC, envT);
+        c.emit(endTag + ":");
     }
+
+    @Override
+    public IType typecheck(EnvironmentT envT) {
+        IType t1 = guard.typecheck(envT);
+        if (t1 instanceof TBool) {
+            IType tt = then_node.typecheck(envT);
+            IType te = else_node.typecheck(envT);
+            if (tt.equals(te))
+                return te;
+            throw new TypeError("mismatch in then or else");
+        }
+        throw new TypeError("condition is not boolean type in if");
+    }
+
 
 
 }

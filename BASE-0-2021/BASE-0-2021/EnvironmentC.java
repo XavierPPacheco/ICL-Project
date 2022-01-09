@@ -10,7 +10,7 @@ public class EnvironmentC {
     private CodeBlock codeBlock;
     private int depth;
     private Set<String> scope;
-    private PrintStream frame_stream;
+    private PrintStream frameStream;
     private static int envCounter = 0;
 
 
@@ -30,10 +30,10 @@ public class EnvironmentC {
         // init new frame
         ICLCompiler.frames_to_compile.append("java -jar jasmin.jar frame_" + depth+".j\n");
 
-        frame_stream = new PrintStream(new File("frame_" + depth + ".j"));
-        frame_stream.println(".class public frame_" + depth);
-        frame_stream.println(".super java/lang/Object");
-        frame_stream.println(".field public sl " + getPrevFrame());
+        frameStream = new PrintStream(new File("frame_" + depth + ".j"));
+        frameStream.println(".class public frame_" + depth);
+        frameStream.println(".super java/lang/Object");
+        frameStream.println(".field public sl " + getPrevFrame());
 
         // init emit
         codeBlock.emit("new frame_" + depth);
@@ -58,7 +58,7 @@ public class EnvironmentC {
     EnvironmentC endScope() {
         // end the frame
         defaultEnd();
-        frame_stream.close();
+        frameStream.close();
         // end emit
         codeBlock.emit("aload_3");
         codeBlock.emit("getfield frame_" + depth + "/sl " + getPrevFrame());
@@ -68,7 +68,7 @@ public class EnvironmentC {
 
     public void assoc(String id) {
         // add to frame
-        frame_stream.println(".field public " + id + " I");
+        frameStream.println(".field public " + id + " I");
         // emit assoc
         codeBlock.emit("putfield frame_" + depth + "/" + id + " I");
         scope.add(id);
@@ -93,10 +93,10 @@ public class EnvironmentC {
     }
 
     private void defaultEnd() {
-        frame_stream.println(".method public <init>()V");
-        frame_stream.println("\taload_0");
-        frame_stream.println("\tinvokenonvirtual java/lang/Object/<init>()V");
-        frame_stream.println("\treturn");
-        frame_stream.println(".end method");
+        frameStream.println(".method public <init>()V");
+        frameStream.println("\taload_0");
+        frameStream.println("\tinvokenonvirtual java/lang/Object/<init>()V");
+        frameStream.println("\treturn");
+        frameStream.println(".end method");
     }
 }

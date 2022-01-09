@@ -1,6 +1,9 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.io.IOException;
+
 
 public class ASTRef implements ASTNode {
 
@@ -15,49 +18,40 @@ public class ASTRef implements ASTNode {
         return new VCell(v.eval(env));
     }
 
-    /*
-    private void createRefClass(String class_name, IType t) {
-        PrintStream classStream = null;
-        try {
-            classStream = new PrintStream(new File(class_name + ".j"));
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        classStream.println(".class public ref_"+t.toString());
-        classStream.println(".super java/lang/Object");
-        classStream.println(".field public v " + t.toString());
-        classStream.println(".method public <init>()V \n 	aload_0 \n 	invokenonvirtual java/lang/Object/<init>()V \n return");
-        classStream.println(".end method");
-        classStream.close();
-    }
-    */
-
     @Override
-    public void compile(CodeBlock c, EnvironmentC env) {
-        /*
+    public void compile(CodeBlock c, EnvironmentC envC, EnvironmentT envT) {
+
         IType t = v.typecheck(envT);
 
-        String class_name = "ref_" + t.toString();
-        createRefClass(class_name, t);
-        c.emit("new " + class_name);
+        // init new ref
+        ICLCompiler.refs_to_compile.append("java -jar jasmin.jar ref_" + t.toString() +".j\n");
+        PrintStream refStream = null;
+        try{
+            refStream = null; refStream = new PrintStream(new File("ref_" + t.toString() + ".j" ));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        refStream.println(".class public ref_"+t.toString());
+        refStream.println(".super java/lang/Object");
+        refStream.println(".field public v " + t.toString());
+        refStream.println(".method public <init>()V \n 	aload_0 \n 	invokenonvirtual java/lang/Object/<init>()V \n return");
+        refStream.println(".end method");
+        refStream.close();
+
+        // init emit
+        c.emit("new ref_" + t.toString());
         c.emit("dup");
-        c.emit("invokespecial " + class_name + "/<init>()V");
+        c.emit("invokespecial " + "ref_" + t.toString() + "/<init>()V");
         c.emit("dup");
-        v.compile(c, env, envT);
-        c.emit("putfield " + class_name + "/v " + t.toString());
-        */
+        v.compile(c, envC, envT);
+        c.emit("putfield " + "ref_" + t.toString() + "/v " + t.toString());
+
     }
 
-    /*
     @Override
-    public IType typecheck(EnvironmentT env) {
-        return new TRef(v.typecheck(env));
+    public IType typecheck(EnvironmentT envT) {
+        return new TRef(v.typecheck(envT));
     }
-     */
+
 
 }
-
-/*
- * .class ref_class .super java/lang/Object .field public v r; .end method
- */

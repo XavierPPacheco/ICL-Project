@@ -11,14 +11,25 @@ public class ASTMul implements ASTNode {
                 return new VInt(((VInt) v1).getval() * ((VInt) v2).getval());
         }
 
-        throw new InterpretorError("Illegal operator on * operation");
+        throw new InterpretorError("Illegal operator in  in ");
     }
 
     @Override
-    public void compile(CodeBlock c, EnvironmentC e) {
-        lhs.compile(c, e);
-        rhs.compile(c, e);
+    public void compile(CodeBlock c, EnvironmentC e, EnvironmentT envT) {
+        lhs.compile(c, e, envT);
+        rhs.compile(c, e, envT);
         c.emit("imul");
+    }
+
+    @Override
+    public IType typecheck(EnvironmentT envT) {
+        IType lt = lhs.typecheck(envT);
+        if(lt instanceof TInt) {
+            IType rt = rhs.typecheck(envT);
+            if(rt instanceof TInt)
+                return new TInt();
+        }
+        throw new TypeError("Div: argument is not an int");
     }
 
     public ASTMul(ASTNode l, ASTNode r)

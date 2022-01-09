@@ -8,9 +8,14 @@ public class ASTId implements ASTNode{
     }
 
     @Override
-    public void compile(CodeBlock c, EnvironmentC e) {
+    public void compile(CodeBlock c, EnvironmentC e, EnvironmentT envT) {
         c.emit("aload_3");
         e.find(id);
+    }
+
+    @Override
+    public IType typecheck(EnvironmentT envT) {
+        return envT.find(id) ;
     }
 
     public ASTId(String id) {
