@@ -25,33 +25,33 @@ public class ASTDef implements ASTNode{
 
         for(Bind bind : binds) {
             c.emit("aload_3");
+            //c.emit("dup");
             bind.getNode().compile(c, e,envT);
-            e.assoc(bind.getVar());
+            e.assoc(bind.getVar(),bind.getNode().typecheck(envT));
         }
-        //c.emit("pop");
+        envT = addType(envT);
+        c.emit("pop");
         body.compile(c, e, envT);
         e.endScope();
     }
 
-    private EnvironmentT addTypes(EnvironmentT env) {
-        List<IType> vals = new LinkedList<>();
-        for(Bind b: binds) {
-            IType t = b.getNode().typecheck(env);
-            vals.add(t);
-            if(!b.getType().equals(t))
+    private EnvironmentT addType(EnvironmentT envT) {
+
+        envT = envT.beginScope();
+
+        for(Bind bind : binds) {
+            IType t = bind.getNode().typecheck(envT);
+
+            if(bind.getType() != null && !bind.getType().equals(t))
                 throw new TypeError("Type mismatch");
+            envT.assoc(bind.getVar(), t);
         }
-        env = env.beginScope();
-        int index = 0;
-        for(Bind b: binds) {
-            env.assoc(b.getVar(), vals.get(index));
-            index++;
-        }
-        return env;
+
+        return envT;
     }
     @Override
     public IType typecheck(EnvironmentT envT) {
-        return body.typecheck(addTypes(envT));
+        return body.typecheck(addType(envT));
     }
 
     public ASTDef(List<Bind> binds, ASTNode body) {

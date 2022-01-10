@@ -22,10 +22,10 @@ ASTNode lhs, rhs;
     @Override
     public IType typecheck(EnvironmentT envT) {
         IType lt = lhs.typecheck(envT);
-        if(lt instanceof TInt) {
+        if(lt instanceof TypeInt) {
             IType rt = rhs.typecheck(envT);
-            if(rt instanceof TInt)
-                return new TInt();
+            if(rt instanceof TypeInt)
+                return new TypeInt();
         }
         throw new TypeError("an argument is not an integer.");
     }

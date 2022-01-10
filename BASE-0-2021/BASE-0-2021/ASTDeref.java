@@ -17,7 +17,7 @@ public class ASTDeref implements ASTNode {
     @Override
     public void compile(CodeBlock c, EnvironmentC envC, EnvironmentT envT) {
         v.compile(c, envC, envT);
-        TRef t = (TRef) v.typecheck(envT);
+        TypeRef t = (TypeRef) v.typecheck(envT);
         c.emit("checkcast " + t.toString());
         c.emit("getfield " + t.toString() + "/v " + t.getreftype().toString());
     }
@@ -25,8 +25,8 @@ public class ASTDeref implements ASTNode {
     @Override
     public IType typecheck(EnvironmentT env) {
         IType r = v.typecheck(env);
-        if (r instanceof TRef)
-            return ((TRef) r).getreftype();
+        if (r instanceof TypeRef)
+            return ((TypeRef) r).getreftype();
         throw new TypeError("argument is not a reference in deref operation");
     }
 

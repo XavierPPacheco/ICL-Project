@@ -23,10 +23,10 @@ ASTNode lhs, rhs;
     @Override
     public IType typecheck(EnvironmentT env) {
         IType lt = lhs.typecheck(env);
-        if(lt instanceof TInt) {
+        if(lt instanceof TypeInt) {
             IType rt = rhs.typecheck(env);
-            if(rt instanceof TInt)
-                return new TInt();
+            if(rt instanceof TypeInt)
+                return new TypeInt();
         }
         throw new TypeError("argument is not an int in add operation");
     }

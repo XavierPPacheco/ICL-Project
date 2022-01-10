@@ -31,40 +31,68 @@
 	putfield frame_0/sl Ljava/lang/Object;
 	astore_3
 	aload_3
-	sipush 2
-	putfield frame_0/x I
-	aload_3
-	sipush 3
-	putfield frame_0/y I
-	new frame_1
+	new ref_I
 	dup
-	invokespecial frame_1/<init>()V
+	invokespecial ref_I/<init>()V
 	dup
+	sipush 10
+	putfield ref_I/v I
+	putfield frame_0/x Ljava/lang/Object;
 	aload_3
-	putfield frame_1/sl Lframe_0;
-	astore_3
+	new ref_I
+	dup
+	invokespecial ref_I/<init>()V
+	dup
+	sipush 0
+	putfield ref_I/v I
+	putfield frame_0/s Ljava/lang/Object;
+	pop
+	L1:
 	aload_3
+	getfield frame_0/x Ljava/lang/Object;
+	checkcast ref_I
+	getfield ref_I/v I
+	sipush 0
+	isub
+	ifgt L3
+	sipush 0
+	goto L4
+	L3:
+ sipush 1
+	L4:
+	ifeq L2
 	aload_3
-	getfield frame_1/sl Lframe_0;
-	getfield frame_0/x I
+	getfield frame_0/s Ljava/lang/Object;
+	checkcast ref_I
 	aload_3
-	getfield frame_1/sl Lframe_0;
-	getfield frame_0/y I
+	getfield frame_0/s Ljava/lang/Object;
+	checkcast ref_I
+	getfield ref_I/v I
+	aload_3
+	getfield frame_0/x Ljava/lang/Object;
+	checkcast ref_I
+	getfield ref_I/v I
 	iadd
-	putfield frame_1/k I
+	putfield ref_I/v I
 	aload_3
-	getfield frame_1/sl Lframe_0;
-	getfield frame_0/x I
+	getfield frame_0/x Ljava/lang/Object;
+	checkcast ref_I
 	aload_3
-	getfield frame_1/sl Lframe_0;
-	getfield frame_0/y I
-	iadd
+	getfield frame_0/x Ljava/lang/Object;
+	checkcast ref_I
+	getfield ref_I/v I
+	sipush 1
+	isub
+	putfield ref_I/v I
+	goto L1
+	L2:
+	getstatic java/lang/System/out Ljava/io/PrintStream;
 	aload_3
-	getfield frame_1/k I
-	iadd
-	aload_3
-	getfield frame_1/sl Lframe_0;
-	astore_3
+	getfield frame_0/s Ljava/lang/Object;
+	checkcast ref_I
+	getfield ref_I/v I
+	invokestatic java/lang/String/valueOf(I)Ljava/lang/String;
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 	aload_3
 	getfield frame_0/sl Ljava/lang/Object;
 	astore_3
@@ -72,10 +100,6 @@
           
        ; END
 
-
-       ; convert to String;
-       invokestatic java/lang/String/valueOf(I)Ljava/lang/String;
-       ; call println 
-       invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
-       return
+    return
 .end method
+

@@ -1,6 +1,6 @@
-public class TBool implements IType {
+public class TypeInt implements IType{
     public String toString() {
-        return "Boolean";
+        return "I";
     }
 
     @Override

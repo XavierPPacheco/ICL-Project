@@ -11,7 +11,7 @@ int val;
 
     @Override
     public IType typecheck(EnvironmentT envT) {
-        return new TInt();
+        return new TypeInt();
     }
 
     public ASTNum(int n)

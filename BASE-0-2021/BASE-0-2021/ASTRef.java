@@ -1,8 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintStream;
-import java.io.IOException;
 
 
 public class ASTRef implements ASTNode {
@@ -50,7 +48,7 @@ public class ASTRef implements ASTNode {
 
     @Override
     public IType typecheck(EnvironmentT envT) {
-        return new TRef(v.typecheck(envT));
+        return new TypeRef(v.typecheck(envT));
     }
 
 

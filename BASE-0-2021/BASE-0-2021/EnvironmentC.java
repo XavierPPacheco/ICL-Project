@@ -66,20 +66,26 @@ public class EnvironmentC {
         return ancestor;
     }
 
-    public void assoc(String id) {
-        // add to frame
-        frameStream.println(".field public " + id + " I");
-        // emit assoc
-        codeBlock.emit("putfield frame_" + depth + "/" + id + " I");
+    public void assoc(String id, IType type) {
+        // emit assoc and add variable to frame
+        if (type instanceof TypeRef) {
+            codeBlock.emit("putfield frame_" + depth + "/" + id + " Ljava/lang/Object;");
+            frameStream.println(".field public " + id + " Ljava/lang/Object;");
+        } else {
+            codeBlock.emit("putfield frame_" + depth + "/" + id + " I");
+            frameStream.println(".field public " + id + " I");
+        }
         scope.add(id);
     }
 
-    public int find(String id) {
-        if (scope.contains(id))
+    public int find(String id, IType type) {
+        if (scope.contains(id) && type instanceof TypeRef) {
+            codeBlock.emit("getfield frame_" + depth + "/" + id + " " + "Ljava/lang/Object;");
+        } else if (scope.contains(id) && !(type instanceof TypeRef)) {
             codeBlock.emit("getfield frame_" + depth + "/" + id + " I");
-        else {
+        } else {
             codeBlock.emit("getfield frame_" + depth + "/sl Lframe_" + ancestor.getDepth() + ";");
-            ancestor.find(id);
+            ancestor.find(id, type);
         }
         return 0;
     }
@@ -89,7 +95,9 @@ public class EnvironmentC {
     }
 
     private String getPrevFrame() {
-        return ancestor.getDepth() == -1 ? "Ljava/lang/Object;" : "Lframe_" + ancestor.getDepth() + ";";
+        if(ancestor.getDepth() == -1 )
+            return "Ljava/lang/Object;" ;
+        return "Lframe_" + ancestor.getDepth() + ";";
     }
 
     private void defaultEnd() {

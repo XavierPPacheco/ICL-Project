@@ -23,6 +23,7 @@ public class ICLCompiler {
                 System.out.println("Your file was compiled to Main.j");
 
             } catch (Exception e) {
+                e.printStackTrace();
                 System.out.println("Syntax Error!");
                 parser.ReInit(System.in);
             }

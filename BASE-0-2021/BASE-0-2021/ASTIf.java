@@ -38,7 +38,7 @@ public class ASTIf implements ASTNode{
     @Override
     public IType typecheck(EnvironmentT envT) {
         IType t1 = guard.typecheck(envT);
-        if (t1 instanceof TBool) {
+        if (t1 instanceof TypeBool) {
             IType tt = then_node.typecheck(envT);
             IType te = else_node.typecheck(envT);
             if (tt.equals(te))

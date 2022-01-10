@@ -21,7 +21,7 @@ public class ASTAssign	implements	ASTNode {
     @Override
     public void compile(CodeBlock c, EnvironmentC env, EnvironmentT envT) {
         lhs.compile(c, env, envT);
-        TRef t = (TRef) lhs.typecheck(envT);
+        TypeRef t = (TypeRef) lhs.typecheck(envT);
         c.emit("checkcast " + t.toString());
         rhs.compile(c, env, envT);
         c.emit("putfield " + t.toString() + "/v " + t.getreftype().toString());
@@ -30,7 +30,7 @@ public class ASTAssign	implements	ASTNode {
     @Override
     public IType typecheck(EnvironmentT env) {
         IType lt = lhs.typecheck(env);
-        if (lt instanceof TRef) {
+        if (lt instanceof TypeRef) {
             return rhs.typecheck(env);
         }
         throw new TypeError("argument is not a reference in assign");

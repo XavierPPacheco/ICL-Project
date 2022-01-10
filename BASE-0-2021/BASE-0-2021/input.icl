@@ -1,1 +1,7 @@
-def a = new 5 in a := !a + 1; println !a end;;
+def x = new 0
+s = new 0 in
+while !x <= 10 do
+s := !s + !x ; x := !x + 1
+end;
+println !s
+end;;

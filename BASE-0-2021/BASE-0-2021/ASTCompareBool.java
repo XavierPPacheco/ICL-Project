@@ -41,6 +41,6 @@ public class ASTCompareBool implements  ASTNode{
 
     @Override
     public IType typecheck(EnvironmentT envT) {
-        return new TBool();
+        return new TypeBool();
     }
 }

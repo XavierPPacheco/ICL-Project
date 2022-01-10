@@ -202,15 +202,15 @@ Token token;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case BOOL:
       jj_consume_token(BOOL);
-             t = new TBool();
+             t = new TypeBool();
       break;
     case INT:
       jj_consume_token(INT);
-            t = new TInt();
+            t = new TypeInt();
       break;
     case REF:
       jj_consume_token(REF);
-            t = new TRef(Type());
+            t = new TypeRef(Type());
       break;
     default:
       jj_la1[8] = jj_gen;
@@ -334,7 +334,7 @@ Token token;
       break;
     case PRINTLN:
       jj_consume_token(PRINTLN);
-                t1 = new ASTPrintln(Fact(), true);
+                 t1 = new ASTPrintln(Fact(), true);
       break;
     default:
       jj_la1[13] = jj_gen;

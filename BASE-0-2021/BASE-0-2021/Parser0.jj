@@ -184,9 +184,9 @@ Token token;
 IType Type() :
 {IType t;}
 {
-( < BOOL > { t = new TBool(); }
-| < INT > { t = new TInt(); }
-| < REF > { t = new TRef(Type()); }
+( < BOOL > { t = new TypeBool(); }
+| < INT > { t = new TypeInt(); }
+| < REF > { t = new TypeRef(Type()); }
 )
 {return t; }
 }
@@ -210,7 +210,7 @@ ASTNode Fact() :
    | <IF> t1 = ExpSeq() <THEN> t2 = ExpSeq() (<ELSE> t3 = ExpSeq())? <END> {t1 = new ASTIf(t1, t2, t3);}
    | <WHILE> t1 = ExpSeq() <DO> t2 = ExpSeq() <END> {t1 = new ASTWhile(t1, t2);}
    | <PRINT> {t1= new ASTPrintln(Fact(), false); }
-   | <PRINTLN> {t1 = new ASTPrintln(Fact(), true); }
+   | <PRINTLN>  {t1 = new ASTPrintln(Fact(), true); }
    )   
   { return t1; }
 }

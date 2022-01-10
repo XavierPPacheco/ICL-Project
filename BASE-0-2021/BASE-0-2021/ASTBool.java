@@ -23,7 +23,7 @@ public class ASTBool implements ASTNode {
 
     @Override
     public IType typecheck(EnvironmentT env) {
-        return new TBool();
+        return new TypeBool();
     }
 
 

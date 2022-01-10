@@ -1,4 +1,4 @@
-public class TRef implements IType{
+public class TypeRef implements IType{
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -7,7 +7,7 @@ public class TRef implements IType{
             return false;
         if (getClass() != obj.getClass())
             return false;
-        TRef other = (TRef) obj;
+        TypeRef other = (TypeRef) obj;
         if (ref == null) {
             if (other.ref != null)
                 return false;
@@ -18,7 +18,7 @@ public class TRef implements IType{
 
     IType ref;
 
-    public TRef(IType r) {
+    public TypeRef(IType r) {
         ref = r;
     }
 

@@ -10,7 +10,7 @@ public class ASTId implements ASTNode{
     @Override
     public void compile(CodeBlock c, EnvironmentC e, EnvironmentT envT) {
         c.emit("aload_3");
-        e.find(id);
+        e.find(id, envT.find(id));
     }
 
     @Override

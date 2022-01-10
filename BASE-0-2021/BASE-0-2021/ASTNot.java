@@ -25,8 +25,8 @@ public class ASTNot implements ASTNode {
 
     @Override
     public IType typecheck(EnvironmentT envT) {
-        if(boolValue instanceof TBool)
-            return new TBool();
+        if(boolValue instanceof TypeBool)
+            return new TypeBool();
         throw new TypeError("argument is not a boolean in not operator");
     }
 }

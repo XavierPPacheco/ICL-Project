@@ -1,6 +1,6 @@
-public class TInt implements IType{
+public class TypeBool implements IType {
     public String toString() {
-        return "Integer";
+        return "I";
     }
 
     @Override

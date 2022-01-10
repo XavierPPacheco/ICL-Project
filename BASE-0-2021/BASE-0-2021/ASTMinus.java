@@ -19,8 +19,8 @@ public class ASTMinus implements ASTNode {
     @Override
     public IType typecheck(EnvironmentT envT) {
         IType lt = val.typecheck(envT);
-        if(lt instanceof TInt) {
-                return new TInt();
+        if(lt instanceof TypeInt) {
+                return new TypeInt();
         }
         throw new TypeError("argument is not an int in subtraction operation");
     }
