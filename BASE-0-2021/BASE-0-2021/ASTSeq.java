@@ -19,6 +19,7 @@ public class ASTSeq implements ASTNode {
 
     @Override
     public IType typecheck(EnvironmentT envT) {
+        lhs.typecheck(envT);
         return rhs.typecheck(envT);
     }
 

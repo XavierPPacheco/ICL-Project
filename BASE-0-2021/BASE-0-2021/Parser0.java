@@ -230,7 +230,7 @@ Token token;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case Num:
       tok = jj_consume_token(Num);
-                 t1 = new ASTNum(Integer.parseInt(tok.image));
+                   t1 = new ASTNum(Integer.parseInt(tok.image));
       break;
     case TRUE:
     case FALSE:
@@ -363,10 +363,10 @@ Token token;
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x658008a1,0x4000,0x7fa000,0x7fa000,0xc0,0xc0,0x300,0x300,0x0,0x0,0x1000,0x0,0x0,0x658008a0,};
+      jj_la1_0 = new int[] {0x918008a1,0x4000,0x7fa000,0x7fa000,0xc0,0xc0,0x300,0x300,0x0,0x0,0x1000,0x0,0x0,0x918008a0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0xb1a,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xe0,0x300,0x0,0x800,0x1,0xb1a,};
+      jj_la1_1 = new int[] {0x2c69,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x380,0xc00,0x0,0x2000,0x4,0x2c69,};
    }
 
   /** Constructor with InputStream. */
@@ -504,7 +504,7 @@ Token token;
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[44];
+    boolean[] la1tokens = new boolean[46];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -521,7 +521,7 @@ Token token;
         }
       }
     }
-    for (int i = 0; i < 44; i++) {
+    for (int i = 0; i < 46; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

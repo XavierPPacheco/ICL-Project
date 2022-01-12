@@ -1,4 +1,3 @@
-import java.util.LinkedList;
 import java.util.List;
 
 public class ASTDef implements ASTNode{
@@ -25,17 +24,17 @@ public class ASTDef implements ASTNode{
 
         for(Bind bind : binds) {
             c.emit("aload_3");
-            //c.emit("dup");
             bind.getNode().compile(c, e,envT);
             e.assoc(bind.getVar(),bind.getNode().typecheck(envT));
         }
-        envT = addType(envT);
+        envT = checkBindsTypes(envT);
         c.emit("pop");
         body.compile(c, e, envT);
+        envT.endScope();
         e.endScope();
     }
 
-    private EnvironmentT addType(EnvironmentT envT) {
+    private EnvironmentT checkBindsTypes(EnvironmentT envT) {
 
         envT = envT.beginScope();
 
@@ -43,15 +42,15 @@ public class ASTDef implements ASTNode{
             IType t = bind.getNode().typecheck(envT);
 
             if(bind.getType() != null && !bind.getType().equals(t))
-                throw new TypeError("Type mismatch");
+                throw new TypeError("Type mismatch between " +  bind.getType() + " and " + t );
             envT.assoc(bind.getVar(), t);
         }
-
         return envT;
     }
     @Override
     public IType typecheck(EnvironmentT envT) {
-        return body.typecheck(addType(envT));
+        envT = checkBindsTypes(envT);
+        return body.typecheck(envT);
     }
 
     public ASTDef(List<Bind> binds, ASTNode body) {

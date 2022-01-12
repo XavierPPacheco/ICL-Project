@@ -65,6 +65,10 @@ TOKEN :
   |
   < RPAR : ")" >
   |
+  < LBRA : "[" >
+  |
+  < RBRA : "]" >
+  |
   < DEF: "def" >
   |
   < IN : "in">
@@ -198,7 +202,7 @@ ASTNode Fact() :
  IType type = null;
  String id; }
 {
-   ( tok=<Num> { t1 = new ASTNum(Integer.parseInt(tok.image)); }
+   ( tok = <Num> { t1 = new ASTNum(Integer.parseInt(tok.image)); }
    | (tok=<TRUE> | tok =<FALSE>) { t1 = new ASTBool(tok.image.equals("true"));}
    | < NEW > {t1 = new ASTRef(Fact());}
    | <DEREF> {t1 = new ASTDeref(Fact());}

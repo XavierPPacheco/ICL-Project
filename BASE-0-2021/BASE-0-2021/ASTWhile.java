@@ -18,7 +18,7 @@ public class ASTWhile implements ASTNode {
     }
 
     @Override
-    public void compile(CodeBlock c, EnvironmentC envC, EnvironmentT envT) {
+    public void compile(CodeBlock c, EnvironmentC envC,  EnvironmentT envT) {
         String whileTag = c.newTag();
         String endTag = c.newTag();
 
@@ -32,10 +32,10 @@ public class ASTWhile implements ASTNode {
     }
 
     @Override
-    public IType typecheck(EnvironmentT env) {
-        if (guard.typecheck(env) instanceof TypeBool)
-            return null;
-        throw new TypeError("guard not a boolean");
+    public IType typecheck(EnvironmentT envT) {
+        if (guard.typecheck(envT) instanceof TypeBool)
+            return body.typecheck(envT);
+        throw new TypeError("While mismatch types");
     }
 
 }

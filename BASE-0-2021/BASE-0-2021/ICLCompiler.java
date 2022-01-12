@@ -17,7 +17,12 @@ public class ICLCompiler {
 
             try {
                 ASTNode ast = parser.Start();
-                ast.compile(code, envC, envT);
+                while (ast != null) {
+                    ast.typecheck(envT);
+                    ast.compile(code, envC, envT);
+                    ast = parser.Start();
+                }
+                
                 PrintStream output = new PrintStream(new File("Main.j"));
                 code.dump(output);
                 System.out.println("Your file was compiled to Main.j");

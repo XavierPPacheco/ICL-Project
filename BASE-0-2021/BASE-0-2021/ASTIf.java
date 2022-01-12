@@ -37,12 +37,12 @@ public class ASTIf implements ASTNode{
 
     @Override
     public IType typecheck(EnvironmentT envT) {
-        IType t1 = guard.typecheck(envT);
-        if (t1 instanceof TypeBool) {
-            IType tt = then_node.typecheck(envT);
-            IType te = else_node.typecheck(envT);
-            if (tt.equals(te))
-                return te;
+        IType type_guard = guard.typecheck(envT);
+        if (type_guard instanceof TypeBool) {
+            IType type_then = then_node.typecheck(envT);
+            IType type_else = else_node.typecheck(envT);
+            if (type_then.equals(type_else))
+                return type_else;
             throw new TypeError("mismatch in then or else");
         }
         throw new TypeError("condition is not boolean type in if");
