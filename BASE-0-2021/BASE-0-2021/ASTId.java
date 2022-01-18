@@ -22,4 +22,7 @@ public class ASTId implements ASTNode{
         this.id = id;
     }
 
+    public String getId() {
+        return id;
+    }
 }

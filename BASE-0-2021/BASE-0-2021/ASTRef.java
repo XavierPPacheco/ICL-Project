@@ -22,10 +22,10 @@ public class ASTRef implements ASTNode {
         IType t = v.typecheck(envT);
 
         // init new ref
-        ICLCompiler.refs_to_compile.append("java -jar jasmin.jar ref_" + t.toString() +".j\n");
+        ICLCompiler.refs_to_compile.append("java -jar jasmin.jar "+ ICLCompiler.BIN_DIR+"/ref_" + t.toString() +".j\n");
         PrintStream refStream = null;
         try{
-            refStream = null; refStream = new PrintStream(new File("ref_" + t.toString() + ".j" ));
+            refStream = null; refStream = new PrintStream(new File(ICLCompiler.BIN_DIR+"/ref_" + t.toString() + ".j" ));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

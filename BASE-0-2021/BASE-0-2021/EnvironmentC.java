@@ -28,9 +28,9 @@ public class EnvironmentC {
         scope = new HashSet<>();
 
         // init new frame
-        ICLCompiler.frames_to_compile.append("java -jar jasmin.jar frame_" + depth+".j\n");
+        ICLCompiler.frames_to_compile.append("java -jar jasmin.jar "+ ICLCompiler.BIN_DIR +"/frame_" + depth+".j\n");
 
-        frameStream = new PrintStream(new File("frame_" + depth + ".j"));
+        frameStream = new PrintStream(new File(ICLCompiler.BIN_DIR +"/frame_" + depth + ".j"));
         frameStream.println(".class public frame_" + depth);
         frameStream.println(".super java/lang/Object");
         frameStream.println(".field public sl " + getPrevFrame());

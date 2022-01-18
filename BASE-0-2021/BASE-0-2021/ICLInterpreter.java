@@ -7,18 +7,18 @@ public class ICLInterpreter {
 
         Parser0 parser = new Parser0(System.in);
         ASTNode ast;
+        Environment<IValue> e = new Environment();
 
         while (true) {
             try {
                 System.out.print("> ");
                 ast = parser.Start();
-                Environment<IValue> e = new Environment();
                 IValue v = ast.eval(e);
 
                 //if(v != null)
                 //    System.out.println(v);
-            } catch (Exception e) {
-                System.out.println(e);
+            } catch (Exception exp) {
+                System.out.println(exp);
                 System.out.println("Syntax Error!");
                 parser.ReInit(System.in);
             }

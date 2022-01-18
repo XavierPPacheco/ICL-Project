@@ -23,6 +23,7 @@
 
 	aconst_null
 	astore_3
+	getstatic java/lang/System/out Ljava/io/PrintStream;
 	new frame_0
 	dup
 	invokespecial frame_0/<init>()V
@@ -35,67 +36,58 @@
 	dup
 	invokespecial ref_I/<init>()V
 	dup
-	sipush 0
+	sipush 1
 	putfield ref_I/v I
-	putfield frame_0/x Ljava/lang/Object;
+	putfield frame_0/result Ljava/lang/Object;
 	aload_3
-	new ref_I
-	dup
-	invokespecial ref_I/<init>()V
-	dup
-	sipush 0
-	putfield ref_I/v I
-	putfield frame_0/s Ljava/lang/Object;
+	sipush 1
+	putfield frame_0/constant1 I
+	aload_3
+	sipush 2
+	putfield frame_0/constant2 I
 	pop
-	L1:
 	aload_3
-	getfield frame_0/x Ljava/lang/Object;
+	getfield frame_0/constant2 I
+	aload_3
+	getfield frame_0/constant1 I
+	isub
+	ifgt L1
+	sipush 0
+	goto L2
+	L1:
+ sipush 1
+	L2:
+	ifeq L3
+	aload_3
+	getfield frame_0/result Ljava/lang/Object;
+	checkcast ref_I
+	sipush 1
+	aload_3
+	getfield frame_0/result Ljava/lang/Object;
 	checkcast ref_I
 	getfield ref_I/v I
-	sipush 10
 	isub
-	ifle L3
-	sipush 0
+	putfield ref_I/v I
 	goto L4
 	L3:
- sipush 1
+	aload_3
+	getfield frame_0/result Ljava/lang/Object;
+	checkcast ref_I
+	aload_3
+	getfield frame_0/result Ljava/lang/Object;
+	checkcast ref_I
+	getfield ref_I/v I
+	putfield ref_I/v I
 	L4:
-	ifeq L2
 	aload_3
-	getfield frame_0/s Ljava/lang/Object;
-	checkcast ref_I
-	aload_3
-	getfield frame_0/s Ljava/lang/Object;
+	getfield frame_0/result Ljava/lang/Object;
 	checkcast ref_I
 	getfield ref_I/v I
-	aload_3
-	getfield frame_0/x Ljava/lang/Object;
-	checkcast ref_I
-	getfield ref_I/v I
-	iadd
-	putfield ref_I/v I
-	aload_3
-	getfield frame_0/x Ljava/lang/Object;
-	checkcast ref_I
-	aload_3
-	getfield frame_0/x Ljava/lang/Object;
-	checkcast ref_I
-	getfield ref_I/v I
-	sipush 1
-	iadd
-	putfield ref_I/v I
-	goto L1
-	L2:
-	getstatic java/lang/System/out Ljava/io/PrintStream;
-	aload_3
-	getfield frame_0/s Ljava/lang/Object;
-	checkcast ref_I
-	getfield ref_I/v I
-	invokestatic java/lang/String/valueOf(I)Ljava/lang/String;
-	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 	aload_3
 	getfield frame_0/sl Ljava/lang/Object;
 	astore_3
+	invokestatic java/lang/String/valueOf(I)Ljava/lang/String;
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
        
           
        ; END

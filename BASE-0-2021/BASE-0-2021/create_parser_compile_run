@@ -1,8 +1,8 @@
 javacc Parser0.jj
 javac Parser0.java
 javac ICLCompiler.java
-java ICLCompiler input.icl
-chmod +x frames_to_Compile
-chmod +x refs_to_Compile
-./frames_to_Compile
-./refs_to_Compile
+java ICLCompiler "$@"
+chmod +x ./projectBin/frames_to_Compile
+chmod +x ./projectBin/refs_to_Compile
+./projectBin/frames_to_Compile
+./projectBin/refs_to_Compile

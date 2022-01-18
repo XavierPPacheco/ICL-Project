@@ -1,0 +1,3 @@
+java -jar jasmin.jar ./projectBin/frame_0.j
+java -jar jasmin.jar ./projectBin/Main.j
+java Main
